@@ -90,5 +90,5 @@ if networks:
 ```
 ### As a Software
 ```sh
-python3 setup.py install
+python3 -m WiFiManager
 ```
