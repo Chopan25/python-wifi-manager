@@ -3,7 +3,7 @@ import getpass
 
 
 def main_menu():
-    menu_message = '0: Exit\n1: Disconnect from network\n2: List available networks\n3: Connect to a network'
+    menu_message = '0: Exit\n1: Disconnect from network\n2: List available networks\n3: Connect to a network\n4: Create hotspot'
 
     print(menu_message)
     selected_option = input('Please select an option to continue: ')
@@ -21,6 +21,9 @@ def main_menu():
         networks = WiFi.list_networks()
         list_nets(networks)
         connect_menu(networks)
+
+    elif selected_option == '4':
+        create_hotspot()
 
     else:
         print('This option is not available, please select a valid option.')
@@ -62,14 +65,20 @@ def connect_menu(networks):
     if networks[selected_net_index].security != '':
         print('This network has a password.')
         password = getpass.getpass('Please enter the password: ')
-        connection_return_code = WiFi.connect(networks[selected_net_index], password)
+        connection_return_code = WiFi.connect(networks[selected_net_index].ssid, password)
     else:
-        connection_return_code = WiFi.connect(networks[selected_net_index])
+        connection_return_code = WiFi.connect(networks[selected_net_index].ssid)
 
     if connection_return_code == 0:
         print(f'Successfully connected to {networks[selected_net_index].ssid}')
     else:
         print(print(f'Error connecting to {networks[selected_net_index].ssid}. Please try again.'))
+
+
+def create_hotspot():
+    ssid = input('Ingrese el ssid que desea usar: ')
+    password = input('Ingrese la clave para la red: ')
+    print(WiFi.create_hotspot(ssid=ssid, password=password))
 
 
 if __name__ == '__main__':

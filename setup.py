@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='WiFiManager',
-    version='1.0.0',
+    version='1.1.0',
     packages=['WiFiManager'],
     url='https://github.com/Chopan25/PythonWiFiManager',
     license='GPL-3',

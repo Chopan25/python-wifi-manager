@@ -40,10 +40,18 @@ A class for managing WiFi networks using `nmcli`.
   - Disconnects from the current WiFi network.
   - **Returns:** Exit code of the `nmcli` command.
 
-- **connect(network: WiFiNetwork, password: str)**
+- **connect(ssid: str, password: str)**
   - Connects to the specified WiFi network using a password.
   - **Parameters:**
-    - `network` (WiFiNetwork): The WiFi network to connect to.
+    - `ssid` (ssid): The WiFi network ssid to connect to.
+    - `password` (str): The password for the WiFi network.
+  - **Returns:** Exit code of the `nmcli` command.
+
+- **create_hotspot(network: WiFiNetwork, password: str, device: str = 'wlan0')**
+  - Connects to the specified WiFi network using a password.
+  - **Parameters:**
+    - `ssid` (str): The WiFi network name.
+    - `device` (str): Device used to generate the network.
     - `password` (str): The password for the WiFi network.
   - **Returns:** Exit code of the `nmcli` command.
 

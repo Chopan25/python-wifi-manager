@@ -78,7 +78,7 @@ class WiFiManager:
         Returns:
             int: Exit code of the `nmcli` command.
         """
-        result = subprocess.run(['sudo', 'nmcli', 'dev', 'wifi', 'rescan'], capture_output=True, text=True)
+        result = subprocess.run(['nmcli', 'dev', 'wifi', 'rescan'], capture_output=True, text=True)
         return result.returncode
 
     @classmethod
@@ -141,22 +141,38 @@ class WiFiManager:
         Returns:
             int: Exit code of the `nmcli` command.
         """
-        result = subprocess.run(['sudo', 'nmcli', 'dev', 'disconnect', 'wlp11s0'], capture_output=True, text=True)
+        result = subprocess.run(['nmcli', 'dev', 'disconnect', 'wlp11s0'], capture_output=True, text=True)
         return result.returncode
 
     @classmethod
-    def connect(cls, network: WiFiNetwork, password: str = ''):
-        """
+    def connect(cls, ssid: str, password: str = ''):
+        """ 
         Connects to a specified WiFi network using `nmcli`.
 
         Args:
-            network (WiFiNetwork): The WiFi network to connect to.
+            ssid (str): The WiFi SSID to connect to.
             password (str): The password for the WiFi network.
 
         Returns:
             int: Exit code of the `nmcli` command.
         """
-        net_ssid = network.ssid
-        result = subprocess.run(['sudo', 'nmcli', 'dev', 'wifi', 'connect', net_ssid, 'password', password],
+        result = subprocess.run(['nmcli', 'dev', 'wifi', 'connect', ssid, 'password', password],
+                                capture_output=True, text=True)
+        return result.returncode
+
+    @classmethod
+    def create_hotspot(cls, ssid: str, password: str, device: str = 'wlan0'):
+        """
+        Creates a WiFi network using `nmcli`.
+
+        Args:
+            ssid (str): The WiFi network name.
+            password (str): The password for the WiFi network.
+            device (str): Device used to generate the network.
+
+        Returns:
+            int: Exit code of the `nmcli` command.
+        """
+        result = subprocess.run(['nmcli', 'device', 'wifi', 'hotspot', 'ifname', device, 'ssid', ssid, 'password', password],
                                 capture_output=True, text=True)
         return result.returncode
